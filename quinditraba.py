@@ -21,6 +21,8 @@ respuestas_por_municipio = [
     "Montenegro es conocido por ser el lugar donde se encuentra el Parque Nacional del Café, un parque temático que celebra la cultura cafetera y que atrae a miles de turistas cada año.",
     "Si visitas Montenegro, no te pierdas la oportunidad de tomar un tour por una finca cafetera y aprender todo sobre el proceso de producción del café."
 ]
+
+historial = []
 #agrupar y agregar categorias
 
 #Despues agregar restaurantes
@@ -32,17 +34,45 @@ def responder(mensaje):
     categoria = clasificador.predict(texto_procesado)[0]
     print (categoria) #--> para saber que categoria tiene el texto agregado.
     
+    respuesta = ""
     # Responder en función de la categoría
     if categoria == "saludos":
-        return random.choice(saludos)
+    
+        respuesta = random.choice(saludos)
+        historial.append((mensaje,respuesta ))
+        print(historial)
+        return respuesta
+    
     elif categoria == "lugares turísticos":
-        return "Algunos de los lugares turísticos más populares son: " + ", ".join(lugares_turisticos)
+        
+        respuesta = "Algunos de los lugares turísticos más populares son: " + ", ".join(lugares_turisticos)
+        historial.append((mensaje,respuesta ))
+        
+        return respuesta
+  
     elif categoria == "actividades":
-        return "Algunas actividades populares incluyen: " + ", ".join(actividades)
+       
+        respuesta = "Algunas actividades populares incluyen: " + ", ".join(actividades)
+        historial.append((mensaje,respuesta ))
+        return respuesta
+  
     elif categoria == "alojamientos":
+        
+        respuesta="Algunos de los mejores hoteles en la zona son: " + ", ".join(alojamientos)
+        historial.append((mensaje,respuesta ))
         return "Algunos de los mejores hoteles en la zona son: " + ", ".join(alojamientos)
+  
     elif categoria == "respuestas_por_municipio":
+    
+        respuesta = random.choice(respuestas_por_municipio)
+        historial.append((mensaje,respuesta ))
         return random.choice(respuestas_por_municipio)
+    
+    elif categoria=="Historial":
+
+        print(historial)
+        return null
+    
     
     else:
         return "Lo siento, no entiendo lo que quieres decir. ¿Podrías reformular tu pregunta?"
@@ -61,8 +91,8 @@ datos = [
     ("alojamientos", "¿Dónde puedo encontrar alojamiento en la ciudad?"),
     ("respuestas_por_municipio", "cuentame de los pueblos."),
     ("respuestas_por_municipio", "cuentame del Quindio."),
-    ("respuestas_por_municipio", "hablame del quindio.")
-    
+    ("respuestas_por_municipio", "hablame del quindio."),
+    ("Historial","Historial")
 ]
 
 # Entrenamiento del modelo de clasificación de texto
