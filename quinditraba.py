@@ -1,5 +1,12 @@
+#Desarrollado por:
+#Juan Pablo Bernal
+#Paulina Garcia
+#Miguel Angel Hernandez
+
+
 import random
 import nltk # py -m pip install nltk
+import json
 from sklearn.feature_extraction.text import CountVectorizer #py -m pip install -U scikit.learn.
 from sklearn.naive_bayes import MultinomialNB
 
@@ -130,6 +137,7 @@ datos = [
     ("respuestas_por_municipio", "hablame del quindio."),
 
     ("lugares turísticos", "¿Cuáles son los lugares turisticos más populares?"),
+    ("lugares turísticos", "¿quiero conocer lugares turisticos en el Quindio?"),    
     ("lugares turísticos", "¿Qué sitios turísticos debería visitar?"),
     ("lugares_naturales","quiero saber más de los lugares naturales."),
     ("lugares_naturales","Lugares naturales."),
@@ -174,4 +182,13 @@ while True:
     else:
         respuesta = responder(mensaje)
         print("chatBot: " + respuesta)
+# Abrir un archivo con el modo de escritura
+with open('datos.json', 'w') as archivo:
+
+    # Usar la función json.dump() para escribir la lista en el archivo JSON
+    json.dump(historial, archivo)
+
+# Cerrar el archivo
+archivo.close() 
+
 
